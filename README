@@ -2,9 +2,10 @@ Android標準のSharedPreferencesがマルチプロセス非対応だったで
 がっかりしつつ書いた設定ファイル管理モジュールです。
 
 import jp.juggler.util.ConfigurationFileSP;
-ConfigurationFileSP pref = ConfigurationFileSP.getInstance(path,false);
+SharedPreferences pref = ConfigurationFileSP.getInstance(path,false);
 
 という感じで作成した pref を SharedPreferences と同じ感じに使えます。
+ConfigurationFileSP#getInstance は pathごとに固有のインスタンスを使い回します。
 
 -----------------------------------------
 src/jp/juggler/util/ConfigurationFileSP.java
