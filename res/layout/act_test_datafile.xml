@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+>
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	>
+		<TextView
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:layout_marginTop="12dp"
+		    android:text="TransactionalFileAccess のテスト。 \nデバッグログ(logcat)を見ながら操作してください"
+		/>
+		
+		<TextView
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:layout_marginTop="12dp"
+		    android:text="java.nio.channels.FileLock"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="別プロセスのサービスがロックを取得してしばらく待機する"
+		    android:id="@+id/btnLockFromService"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="その間にUIプロセスからロックを取得してみる(すぐに解放します)"
+		    android:id="@+id/btnLockFromUI"
+		/>
+		
+		<TextView
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:layout_marginTop="12dp"
+		    android:text="mmapした領域のデータ更新が別プロセスにすぐ伝わるかどうか"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="別プロセスのサービスがしばらくの間、定期的に更新チェックを行う"
+		    android:id="@+id/btnCheckFromService"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="その間にUIプロセスから更新を行なってみる"
+		    android:id="@+id/btnUpdateFromUI"
+		/>
+		
+		<TextView
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:layout_marginTop="12dp"
+		    android:text="後始末"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="サービスを停止"
+		    android:id="@+id/btnStopService"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="データファイルをリセット"
+		    android:id="@+id/btnResetDatafile"
+		/>
+		<Button
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="データファイルを削除してバックアップから復帰"
+		    android:id="@+id/btnRestoreDatafile"
+		/>
+	</LinearLayout>
+</ScrollView>
