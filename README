@@ -1,0 +1,51 @@
+Android標準のSharedPreferencesがマルチプロセス非対応だったで
+がっかりしつつ書いた設定ファイル管理モジュールです。
+
+import jp.juggler.util.ConfigurationFileSP;
+ConfigurationFileSP pref = ConfigurationFileSP.getInstance(path,false);
+
+という感じで作成した pref を SharedPreferences と同じ感じに使えます。
+
+-----------------------------------------
+src/jp/juggler/util/ConfigurationFileSP.java
+
+キーと値のマップを保持するタイプの設定管理もキュールです。
+- インタフェースは SharedPreferences とおおむね互換があります。
+- ファイル更新部分は複数プロセスからの読み書きに対応しています。
+
+ただし制限がいくつかあります。
+- OnSharedPreferenceChangeListener をサポートしてません。実行時にUnsupportedOperationExceptionを出します。
+- SharedPreferences.Editor#apply() をサポートしてません。実行時にUnsupportedOperationExceptionを出します。
+- SharedPreferences.Editor#commit の呼び出しスレッドから直接ファイルアクセスを行います。STRICTモードだと問題があるかもしれません。
+- 継承元インタフェースの制限により、エラー時にIOExceptionではなくRuntimeExceptionを投げる場合があります
+
+-----------------------------------------
+src/jp/juggler/util/TransactionalFileAccess.java
+
+複数のプロセスからデータファイルの読み書きを行うためのクラスです。
+
+データの読み込みには byte[] load_if_update() を使います。
+まだデータを読んだことがないか、最後に読んだあとに変更されていればデータを読み込みます。
+
+データの書き出しには  transaction(TransactionProc) を呼び出します。
+古いデータを加工して新しいデータを返すようなコードを TransactionProc#update に 実装してください。
+
+特徴
+- 読み書きの際に flock (javaのFileLock) を取得して排他を行います。
+- ヘッダ部分をmmap(javaの MappedByteBuffer)でメモリにマッピングして、更新チェックの負荷を下げています。
+- データのSHA-1ダイジェストをヘッダに格納して、ロード時にチェックを行います。
+- 保存時にバックアップファイルを作成するのでデータ破損に強い？かもしれません。破損の仕方にもよりますが。
+
+注意点
+- このクラスは実際にはデータファイルとバックアップファイルの２つのファイルを作成/更新します
+- MappedByteBuffer は明示的に unmapを行うことができません。gcまかせです。
+- MappedByteBuffer.force() の結果が別プロセス上のマッピングにすぐに伝達されるかどうかは未定義です。
+- ファイル全体がメモリに収まるような用途しか想定してません。
+
+-----------------------------------------
+ライセンス
+
+配布・改造などの再利用はご自由にどうぞ。
+ただし著作権は放棄しません。
+
+
