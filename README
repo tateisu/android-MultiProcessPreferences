@@ -1,5 +1,8 @@
-Android標準のSharedPreferencesがマルチプロセス非対応だったで
-がっかりしつつ書いた設定ファイル管理モジュールです。
+Android標準のSharedPreferencesがマルチプロセス非対応だった
+( MODE_MULTI_PROCESS を指定しただけでは不十分)ので、
+がっかりしつつ書いた
+設定ファイル管理モジュールです。
+
 
 import jp.juggler.util.ConfigurationFileSP;
 SharedPreferences pref = ConfigurationFileSP.getInstance(path,false);
