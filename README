@@ -12,7 +12,7 @@ ConfigurationFileSP#getInstance は pathごとに固有のインスタンスを�
 -----------------------------------------
 src/jp/juggler/util/ConfigurationFileSP.java
 
-キーと値のマップを保持するタイプの設定管理もキュールです。
+キーと値のマップを保持するタイプの設定管理クラスです。
 - インタフェースは SharedPreferences とおおむね互換があります。
 - ファイル更新部分は複数プロセスからの読み書きに対応しています。
 
